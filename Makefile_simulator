@@ -1,0 +1,17 @@
+TARGET = simulator:clang
+ARCHS = x86_64 i386
+
+DEBUG = 0
+GO_EASY_ON_ME = 0
+
+include $(THEOS)/makefiles/common.mk
+
+TWEAK_NAME = YUNoPauseAudio
+YUNoPauseAudio_FILES = Tweak.xm
+YUNoPauseAudio_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
+YUNoPauseAudio_CFLAGS += -Wundeclared-selector
+
+include $(THEOS_MAKE_PATH)/tweak.mk
+
+after-install::
+	install.exec "killall -9 SpringBoard"
